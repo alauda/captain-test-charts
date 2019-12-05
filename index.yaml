@@ -1,12 +1,42 @@
 apiVersion: v1
 entries:
-  basic-nginx-ingress:
+  jenkins:
+  - apiVersion: v1
+    appVersion: lts
+    created: "2019-12-05T13:53:23.390364+08:00"
+    description: Open source continuous integration server. It supports multiple SCM
+      tools including CVS, Subversion and Git. It can execute Apache Ant and Apache
+      Maven-based projects as well as arbitrary scripts.
+    digest: 317b2d4c4df498df7a424989be6c3b5600e28f08b60af0957251f6f3ab7c60c5
+    home: https://jenkins.io/
+    icon: https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png
+    maintainers:
+    - email: lachlan.evenson@microsoft.com
+      name: lachie83
+    - email: viglesias@google.com
+      name: viglesiasce
+    - email: maor.friedman@redhat.com
+      name: maorfr
+    - email: mail@torstenwalter.de
+      name: torstenwalter
+    - email: garridomota@gmail.com
+      name: mogaal
+    name: jenkins
+    sources:
+    - https://github.com/jenkinsci/jenkins
+    - https://github.com/jenkinsci/docker-jnlp-slave
+    - https://github.com/maorfr/kube-tasks
+    - https://github.com/jenkinsci/configuration-as-code-plugin
+    urls:
+    - https://alauda.github.io/captain-test-charts/jenkins-1.9.8.tgz
+    version: 1.9.8
+  nginx-ingress:
   - apiVersion: v1
     appVersion: 0.26.1
-    created: "2019-12-05T10:32:22.951059+08:00"
+    created: "2019-12-05T13:53:23.392971+08:00"
     description: An nginx Ingress controller that uses ConfigMap to store the nginx
       configuration.
-    digest: 318b7bc67b15fbdbc0c17389348c0c3c89574c8142507613eeadb6debf2f1026
+    digest: 6d14f77dd54befcf21d7234b28363141165b4196d4cee5464e3741b813f6813a
     home: https://github.com/kubernetes/ingress-nginx
     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
     keywords:
@@ -17,10 +47,10 @@ entries:
     - name: ChiefAlexander
     - email: Trevor.G.Wood@gmail.com
       name: taharah
-    name: basic-nginx-ingress
+    name: nginx-ingress
     sources:
     - https://github.com/kubernetes/ingress-nginx
     urls:
-    - https://alauda.github.io/captain-test-charts/basic-nginx-ingress-1.26.2.tgz
+    - https://alauda.github.io/captain-test-charts/nginx-ingress-1.26.2.tgz
     version: 1.26.2
-generated: "2019-12-05T10:32:22.945811+08:00"
+generated: "2019-12-05T13:53:23.382141+08:00"
