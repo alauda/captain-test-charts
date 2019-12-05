@@ -1,0 +1,8 @@
+kind: HelmRequest
+apiVersion: app.alauda.io/v1alpha1
+metadata:
+  name: dep-jenkins
+spec:
+  chart: captain-test/jenkins
+  dependencies:
+    - basic-nginx-ingress
