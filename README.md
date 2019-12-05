@@ -10,6 +10,8 @@ helm repo add <repo-name>  https://alauda.github.io/captain-test-charts/
 kubectl apply -f https://raw.githubusercontent.com/alauda/captain-test-charts/master/chartrepo.yaml
 ```
 
+The ChartRepo name is `captain-test`
+
 ## How to add charts
 
 1. create a dir with chart source
