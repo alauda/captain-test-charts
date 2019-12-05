@@ -4,6 +4,11 @@
 helm repo add <repo-name>  https://alauda.github.io/captain-test-charts/
 ```
 
+## Add this repo to Captain
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/alauda/captain-test-charts/master/chartrepo.yaml
+```
 
 ## How to add charts
 
