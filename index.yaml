@@ -1,0 +1,26 @@
+apiVersion: v1
+entries:
+  basic-nginx-ingress:
+  - apiVersion: v1
+    appVersion: 0.26.1
+    created: "2019-12-05T10:32:22.951059+08:00"
+    description: An nginx Ingress controller that uses ConfigMap to store the nginx
+      configuration.
+    digest: 318b7bc67b15fbdbc0c17389348c0c3c89574c8142507613eeadb6debf2f1026
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
+    keywords:
+    - ingress
+    - nginx
+    kubeVersion: '>=1.10.0-0'
+    maintainers:
+    - name: ChiefAlexander
+    - email: Trevor.G.Wood@gmail.com
+      name: taharah
+    name: basic-nginx-ingress
+    sources:
+    - https://github.com/kubernetes/ingress-nginx
+    urls:
+    - https://alauda.github.io/captain-test-charts/basic-nginx-ingress-1.26.2.tgz
+    version: 1.26.2
+generated: "2019-12-05T10:32:22.945811+08:00"
