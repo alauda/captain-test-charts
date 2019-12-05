@@ -17,3 +17,8 @@ The ChartRepo name is `captain-test`
 1. create a dir with chart source
 2. Run `helm package <source-dir>/`
 3. Run `helm repo index --url https://alauda.github.io/captain-test-charts/ --merge index.yaml .`
+
+
+## How to use in captain
+
+chech the `hr` dir, it contains all the kinds of HelmRequests
