@@ -22,3 +22,6 @@ The ChartRepo name is `captain-test`
 ## How to use in captain
 
 chech the `hr` dir, it contains all the kinds of HelmRequests
+
+
+There is also a test script in captain to show how to use this repo: [tests.sh](https://github.com/alauda/captain/blob/master/tests.sh)
