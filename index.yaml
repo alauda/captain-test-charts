@@ -1,9 +1,42 @@
 apiVersion: v1
 entries:
+  ghost-bad-cr:
+  - apiVersion: v1
+    appVersion: 3.1.1
+    created: "2019-12-13T14:25:47.236403+08:00"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      tags:
+      - ghost-database
+      version: 7.x.x
+    description: A simple, powerful publishing platform that allows you to share your
+      stories with the world
+    digest: 55d0a5a6d07540555b4024c164cf40ebdae4a3d4d3f56e49b745efe0855ed392
+    home: http://www.ghost.org/
+    icon: https://bitnami.com/assets/stacks/ghost/img/ghost-stack-220x234.png
+    keywords:
+    - ghost
+    - blog
+    - http
+    - web
+    - application
+    - nodejs
+    - javascript
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    name: ghost-bad-cr
+    sources:
+    - https://github.com/bitnami/bitnami-docker-ghost
+    urls:
+    - https://alauda.github.io/captain-test-charts/ghost-bad-cr-9.0.3.tgz
+    version: 9.0.3
   jenkins:
   - apiVersion: v1
     appVersion: lts
-    created: "2019-12-05T13:53:23.390364+08:00"
+    created: "2019-12-13T14:25:47.24183+08:00"
     description: Open source continuous integration server. It supports multiple SCM
       tools including CVS, Subversion and Git. It can execute Apache Ant and Apache
       Maven-based projects as well as arbitrary scripts.
@@ -33,7 +66,7 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 0.26.1
-    created: "2019-12-05T13:53:23.392971+08:00"
+    created: "2019-12-13T14:25:47.245539+08:00"
     description: An nginx Ingress controller that uses ConfigMap to store the nginx
       configuration.
     digest: 6d14f77dd54befcf21d7234b28363141165b4196d4cee5464e3741b813f6813a
@@ -53,4 +86,4 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/nginx-ingress-1.26.2.tgz
     version: 1.26.2
-generated: "2019-12-05T13:53:23.382141+08:00"
+generated: "2019-12-13T14:25:47.232174+08:00"

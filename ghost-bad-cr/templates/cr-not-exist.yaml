@@ -1,0 +1,5 @@
+apiVersion: "stable.example.com/v1"
+kind: CronTab
+metadata:
+  finalizers:
+  - finalizer.stable.example.com
