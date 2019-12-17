@@ -1,0 +1,6 @@
+kind: HelmRequest
+apiVersion: app.alauda.io/v1alpha1
+metadata:
+  name: tomcat-crd-install
+spec:
+  chart: captain-test/tomcat-crd-install
