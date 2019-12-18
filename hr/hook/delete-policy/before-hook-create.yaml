@@ -1,0 +1,6 @@
+kind: HelmRequest
+apiVersion: app.alauda.io/v1alpha1
+metadata:
+  name: hook-delete-jaeger
+spec:
+  chart: captain-test/jaeger-operator

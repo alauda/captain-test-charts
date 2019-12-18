@@ -3,7 +3,7 @@ entries:
   ghost-bad-cr:
   - apiVersion: v1
     appVersion: 3.1.1
-    created: "2019-12-13T15:00:23.578276+08:00"
+    created: "2019-12-18T14:14:42.186053+08:00"
     dependencies:
     - condition: mariadb.enabled
       name: mariadb
@@ -33,10 +33,27 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/ghost-bad-cr-9.0.3.tgz
     version: 9.0.3
+  jaeger-operator:
+  - apiVersion: v1
+    appVersion: 1.14.0
+    created: "2019-12-18T14:14:42.186644+08:00"
+    description: jaeger-operator Helm chart for Kubernetes
+    digest: 53577db1e5b3857ddb6036f309474e4b77368297d2c858d9aa4382d43f89413b
+    home: https://www.jaegertracing.io/
+    icon: https://www.jaegertracing.io/img/jaeger-icon-reverse-color.svg
+    maintainers:
+    - email: ctadeu@gmail.com
+      name: cpanato
+    - email: batazor111@gmail.com
+      name: batazor
+    name: jaeger-operator
+    urls:
+    - https://alauda.github.io/captain-test-charts/jaeger-operator-2.10.2.tgz
+    version: 2.10.2
   jenkins:
   - apiVersion: v1
     appVersion: lts
-    created: "2019-12-13T15:00:23.581367+08:00"
+    created: "2019-12-18T14:14:42.190196+08:00"
     description: Open source continuous integration server. It supports multiple SCM
       tools including CVS, Subversion and Git. It can execute Apache Ant and Apache
       Maven-based projects as well as arbitrary scripts.
@@ -66,7 +83,7 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 0.26.1
-    created: "2019-12-13T15:00:23.584344+08:00"
+    created: "2019-12-18T14:14:42.194152+08:00"
     description: An nginx Ingress controller that uses ConfigMap to store the nginx
       configuration.
     digest: 6d14f77dd54befcf21d7234b28363141165b4196d4cee5464e3741b813f6813a
@@ -105,7 +122,7 @@ entries:
   tomcat-crd-install:
   - apiVersion: v1
     appVersion: "7.0"
-    created: "2019-12-13T15:00:23.584967+08:00"
+    created: "2019-12-18T14:14:42.195534+08:00"
     description: Deploy a basic tomcat application server with sidecar as web archive
       container
     digest: 7fa205225eb0fd9bd9ce74e72d5578a21d90d4fe3f1428931f62112c93cee5da
@@ -118,4 +135,4 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/tomcat-crd-install-0.4.0.tgz
     version: 0.4.0
-generated: "2019-12-13T15:00:23.574366+08:00"
+generated: "2019-12-18T14:14:42.180226+08:00"
