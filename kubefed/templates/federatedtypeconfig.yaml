@@ -1,0 +1,421 @@
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: clusterroles.rbac.authorization.k8s.io
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedClusterRole
+    pluralName: federatedclusterroles
+    scope: Cluster
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    pluralName: clusterroles
+    scope: Cluster
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: applications.app.k8s.io
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedApplication
+    pluralName: federatedapplications
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: app.k8s.io
+    kind: Application
+    pluralName: applications
+    scope: Namespaced
+    version: v1beta1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: userbindings.auth.alauda.io
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedUserBinding
+    pluralName: federateduserbindings
+    scope: Cluster
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: auth.alauda.io
+    kind: UserBinding
+    pluralName: userbindings
+    scope: Cluster
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: daemonsets.apps
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedDaemonSet
+    pluralName: federateddaemonsets
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: apps
+    kind: DaemonSet
+    pluralName: daemonsets
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: statefulsets.apps
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedStatefulSet
+    pluralName: federatedstatefulsets
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: apps
+    kind: StatefulSet
+    pluralName: statefulsets
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: limitranges
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedLimitRange
+    pluralName: federatedlimitranges
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: LimitRange
+    pluralName: limitranges
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: resourcequotas
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedResourceQuota
+    pluralName: federatedresourcequotas
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: ResourceQuota
+    pluralName: resourcequotas
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: cronjobs.batch
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedCronJob
+    pluralName: federatedcronjobs
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: batch
+    kind: CronJob
+    pluralName: cronjobs
+    scope: Namespaced
+    version: v1beta1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: persistentvolumes
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedPersistentVolume
+    pluralName: federatedpersistentvolumes
+    scope: Cluster
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: PersistentVolume
+    pluralName: persistentvolumes
+    scope: Cluster
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: persistentvolumeclaims
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedPersistentVolumeClaim
+    pluralName: federatedpersistentvolumeclaims
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: PersistentVolumeClaim
+    pluralName: persistentvolumeclaims
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: roles.rbac.authorization.k8s.io
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedRole
+    pluralName: federatedroles
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: rbac.authorization.k8s.io
+    kind: Role
+    pluralName: roles
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: rolebindings.rbac.authorization.k8s.io
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedRoleBinding
+    pluralName: federatedrolebindings
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: rbac.authorization.k8s.io
+    kind: RoleBinding
+    pluralName: rolebindings
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: clusterrolebindings.rbac.authorization.k8s.io
+  namespace: {{ .Release.Namespace }}
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedClusterRoleBinding
+    pluralName: federatedclusterrolebindings
+    scope: Cluster
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+    pluralName: clusterrolebindings
+    scope: Cluster
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: configmaps
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedConfigMap
+    pluralName: federatedconfigmaps
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: ConfigMap
+    pluralName: configmaps
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: deployments.apps
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedDeployment
+    pluralName: federateddeployments
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: apps
+    kind: Deployment
+    pluralName: deployments
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: ingresses.extensions
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedIngress
+    pluralName: federatedingresses
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: extensions
+    kind: Ingress
+    pluralName: ingresses
+    scope: Namespaced
+    version: v1beta1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: jobs.batch
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedJob
+    pluralName: federatedjobs
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: batch
+    kind: Job
+    pluralName: jobs
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: namespaces
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedNamespace
+    pluralName: federatednamespaces
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: Namespace
+    pluralName: namespaces
+    scope: Cluster
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: replicasets.apps
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedReplicaSet
+    pluralName: federatedreplicasets
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    group: apps
+    kind: ReplicaSet
+    pluralName: replicasets
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: secrets
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedSecret
+    pluralName: federatedsecrets
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: Secret
+    pluralName: secrets
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: serviceaccounts
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedServiceAccount
+    pluralName: federatedserviceaccounts
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: ServiceAccount
+    pluralName: serviceaccounts
+    scope: Namespaced
+    version: v1
+---
+apiVersion: core.kubefed.io/v1beta1
+kind: FederatedTypeConfig
+metadata:
+  name: services
+spec:
+  federatedType:
+    group: types.kubefed.io
+    kind: FederatedService
+    pluralName: federatedservices
+    scope: Namespaced
+    version: v1beta1
+  propagation: Enabled
+  targetType:
+    kind: Service
+    pluralName: services
+    scope: Namespaced
+    version: v1

@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pre-delete-job
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: default
+      containers:
+        - name: pre-delete-all-cr
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.kubectl.repository }}:{{ .Values.global.images.kubectl.tag }}"
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+          command: ["kubectl",  "delete", "FederatedTypeConfig", "-n", "{{ .Release.Namespace }}", "--all"]

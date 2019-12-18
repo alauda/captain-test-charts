@@ -3,7 +3,7 @@ entries:
   ghost-bad-cr:
   - apiVersion: v1
     appVersion: 3.1.1
-    created: "2019-12-18T14:14:42.186053+08:00"
+    created: "2019-12-18T16:49:48.675753+08:00"
     dependencies:
     - condition: mariadb.enabled
       name: mariadb
@@ -36,7 +36,7 @@ entries:
   jaeger-operator:
   - apiVersion: v1
     appVersion: 1.14.0
-    created: "2019-12-18T14:14:42.186644+08:00"
+    created: "2019-12-18T16:49:48.676881+08:00"
     description: jaeger-operator Helm chart for Kubernetes
     digest: 53577db1e5b3857ddb6036f309474e4b77368297d2c858d9aa4382d43f89413b
     home: https://www.jaegertracing.io/
@@ -53,7 +53,7 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: lts
-    created: "2019-12-18T14:14:42.190196+08:00"
+    created: "2019-12-18T16:49:48.680581+08:00"
     description: Open source continuous integration server. It supports multiple SCM
       tools including CVS, Subversion and Git. It can execute Apache Ant and Apache
       Maven-based projects as well as arbitrary scripts.
@@ -80,10 +80,24 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/jenkins-1.9.8.tgz
     version: 1.9.8
+  kubefed:
+  - apiVersion: v1
+    created: "2019-12-18T16:49:48.682531+08:00"
+    dependencies:
+    - condition: controllermanager.enabled
+      name: controllermanager
+      repository: ""
+      version: 0.0.2
+    description: KubeFed helm chart
+    digest: 57a1a792e7b719abcdf63543db998e5334a36cc299f03c6921afb666bee0ed0f
+    name: kubefed
+    urls:
+    - https://alauda.github.io/captain-test-charts/kubefed-0.0.2.tgz
+    version: 0.0.2
   nginx-ingress:
   - apiVersion: v1
     appVersion: 0.26.1
-    created: "2019-12-18T14:14:42.194152+08:00"
+    created: "2019-12-18T16:49:48.686352+08:00"
     description: An nginx Ingress controller that uses ConfigMap to store the nginx
       configuration.
     digest: 6d14f77dd54befcf21d7234b28363141165b4196d4cee5464e3741b813f6813a
@@ -122,7 +136,7 @@ entries:
   tomcat-crd-install:
   - apiVersion: v1
     appVersion: "7.0"
-    created: "2019-12-18T14:14:42.195534+08:00"
+    created: "2019-12-18T16:49:48.687512+08:00"
     description: Deploy a basic tomcat application server with sidecar as web archive
       container
     digest: 7fa205225eb0fd9bd9ce74e72d5578a21d90d4fe3f1428931f62112c93cee5da
@@ -135,4 +149,4 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/tomcat-crd-install-0.4.0.tgz
     version: 0.4.0
-generated: "2019-12-18T14:14:42.180226+08:00"
+generated: "2019-12-18T16:49:48.669919+08:00"

@@ -1,0 +1,3262 @@
+{{ if (or (or (not .Values.global.scope) (eq .Values.global.scope "Cluster")) (not (.Capabilities.APIVersions.Has "types.kubefed.io/v1beta1"))) }}
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedclusterroles.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedClusterRole
+    plural: federatedclusterroles
+  scope: Cluster
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedapplications.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedApplication
+    listKind: FederatedApplicationList
+    plural: federatedapplications
+    singular: federatedapplication
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federateduserbindings.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedUserBinding
+    listKind: FederatedUserBindingList
+    plural: federateduserbindings
+    singular: federateduserbinding
+  scope: Cluster
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federateddaemonsets.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedDaemonSet
+    listKind: FederatedDaemonSetList
+    plural: federateddaemonsets
+    shortNames:
+      - fds
+    singular: federateddaemonset
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedstatefulsets.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedStatefulSet
+    listKind: FederatedStatefulSetList
+    plural: federatedstatefulsets
+    shortNames:
+      - fsts
+    singular: federatedstatefulset
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            retainReplicas:
+              type: boolean
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedlimitranges.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedLimitRange
+    listKind: FederatedLimitRangeList
+    plural: federatedlimitranges
+    shortNames:
+      - flimits
+    singular: federatedlimitrange
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedresourcequotas.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedResourceQuota
+    listKind: FederatedResourceQuotaList
+    plural: federatedresourcequotas
+    shortNames:
+      - fquota
+    singular: federatedresourcequota
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedcronjobs.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedCronJob
+    listKind: FederatedCronJobList
+    plural: federatedcronjobs
+    shortNames:
+      - fcj
+    singular: federatedcronjob
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedpersistentvolumes.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedPersistentVolume
+    listKind: FederatedPersistentVolumeList
+    plural: federatedpersistentvolumes
+    shortNames:
+      - fpv
+    singular: federatedpersistentvolume
+  scope: Cluster
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedpersistentvolumeclaims.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedPersistentVolumeClaim
+    listKind: FederatedPersistentVolumeClaimList
+    plural: federatedpersistentvolumeclaims
+    shortNames:
+      - fpvc
+    singular: federatedpersistentvolumeclaim
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedroles.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedRole
+    listKind: FederatedRoleList
+    plural: federatedroles
+    singular: federatedrole
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedrolebindings.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedRoleBinding
+    listKind: FederatedRoleBindingList
+    plural: federatedrolebindings
+    singular: federatedrolebinding
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedclusterrolebindings.types.kubefed.io
+spec:
+  conversion:
+    strategy: None
+  group: types.kubefed.io
+  names:
+    kind: FederatedClusterRoleBinding
+    listKind: FederatedClusterRoleBindingList
+    plural: federatedclusterrolebindings
+    singular: federatedclusterrolebinding
+  scope: Cluster
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                            - type: string
+                            - type: integer
+                            - type: boolean
+                            - type: object
+                            - type: array
+                      required:
+                        - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                          - key
+                          - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                      - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                  - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                  - type
+                  - status
+                type: object
+              type: array
+          type: object
+      required:
+        - spec
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedconfigmaps.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedConfigMap
+    plural: federatedconfigmaps
+    shortNames:
+    - fcm
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federateddeployments.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedDeployment
+    plural: federateddeployments
+    shortNames:
+    - fdeploy
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            retainReplicas:
+              type: boolean
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedingresses.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedIngress
+    plural: federatedingresses
+    shortNames:
+    - fing
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedjobs.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedJob
+    plural: federatedjobs
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatednamespaces.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedNamespace
+    plural: federatednamespaces
+    shortNames:
+    - fns
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedreplicasets.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedReplicaSet
+    plural: federatedreplicasets
+    shortNames:
+    - frs
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            retainReplicas:
+              type: boolean
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedsecrets.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedSecret
+    plural: federatedsecrets
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedserviceaccounts.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedServiceAccount
+    plural: federatedserviceaccounts
+    shortNames:
+    - fsa
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  name: federatedservices.types.kubefed.io
+spec:
+  group: types.kubefed.io
+  names:
+    kind: FederatedService
+    plural: federatedservices
+    shortNames:
+    - fsvc
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            overrides:
+              items:
+                properties:
+                  clusterName:
+                    type: string
+                  clusterOverrides:
+                    items:
+                      properties:
+                        op:
+                          pattern: ^(add|remove|replace)?$
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: integer
+                          - type: boolean
+                          - type: object
+                          - type: array
+                      required:
+                      - path
+                      type: object
+                    type: array
+                type: object
+              type: array
+            placement:
+              properties:
+                clusterSelector:
+                  properties:
+                    matchExpressions:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          operator:
+                            type: string
+                          values:
+                            items:
+                              type: string
+                            type: array
+                        required:
+                        - key
+                        - operator
+                        type: object
+                      type: array
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+                clusters:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type: array
+              type: object
+            template:
+              type: object
+          type: object
+        status:
+          properties:
+            clusters:
+              items:
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - name
+                type: object
+              type: array
+            conditions:
+              items:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    format: date-time
+                    type: string
+                  reason:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - type
+                - status
+                type: object
+              type: array
+            observedGeneration:
+              format: int64
+              type: integer
+          type: object
+      required:
+      - spec
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  creationTimestamp: null
+  name: kubefedconfigs.core.kubefed.io
+spec:
+  group: core.kubefed.io
+  names:
+    kind: KubeFedConfig
+    listKind: KubeFedConfigList
+    plural: kubefedconfigs
+    singular: kubefedconfig
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: KubeFedConfigSpec defines the desired state of KubeFedConfig
+          properties:
+            clusterHealthCheck:
+              properties:
+                failureThreshold:
+                  description: Minimum consecutive failures for the cluster health
+                    to be considered failed after having succeeded.
+                  format: int64
+                  type: integer
+                period:
+                  description: How often to monitor the cluster health.
+                  type: string
+                successThreshold:
+                  description: Minimum consecutive successes for the cluster health
+                    to be considered successful after having failed.
+                  format: int64
+                  type: integer
+                timeout:
+                  description: Duration after which the cluster health check times
+                    out.
+                  type: string
+              type: object
+            controllerDuration:
+              properties:
+                availableDelay:
+                  description: Time to wait before reconciling on a healthy cluster.
+                  type: string
+                unavailableDelay:
+                  description: Time to wait before giving up on an unhealthy cluster.
+                  type: string
+              type: object
+            featureGates:
+              items:
+                properties:
+                  configuration:
+                    type: string
+                  name:
+                    type: string
+                required:
+                  - configuration
+                  - name
+                type: object
+              type: array
+            leaderElect:
+              properties:
+                leaseDuration:
+                  description: The duration that non-leader candidates will wait after
+                    observing a leadership renewal until attempting to acquire leadership
+                    of a led but unrenewed leader slot. This is effectively the maximum
+                    duration that a leader can be stopped before it is replaced by
+                    another candidate. This is only applicable if leader election
+                    is enabled.
+                  type: string
+                renewDeadline:
+                  description: The interval between attempts by the acting master
+                    to renew a leadership slot before it stops leading. This must
+                    be less than or equal to the lease duration. This is only applicable
+                    if leader election is enabled.
+                  type: string
+                resourceLock:
+                  description: The type of resource object that is used for locking
+                    during leader election. Supported options are `configmaps` (default)
+                    and `endpoints`.
+                  type: string
+                retryPeriod:
+                  description: The duration the clients should wait between attempting
+                    acquisition and renewal of a leadership. This is only applicable
+                    if leader election is enabled.
+                  type: string
+              type: object
+            scope:
+              description: The scope of the KubeFed control plane should be either
+                `Namespaced` or `Cluster`. `Namespaced` indicates that the KubeFed
+                namespace will be the only target of the control plane.
+              type: string
+            syncController:
+              properties:
+                adoptResources:
+                  description: Whether to adopt pre-existing resources in member clusters.
+                    Defaults to "Enabled".
+                  type: string
+              type: object
+          required:
+            - scope
+          type: object
+      required:
+        - spec
+      type: object
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/hook": crd-install
+  creationTimestamp: null
+  name: federatedtypeconfigs.core.kubefed.io
+spec:
+  group: core.kubefed.io
+  names:
+    kind: FederatedTypeConfig
+    listKind: FederatedTypeConfigList
+    plural: federatedtypeconfigs
+    shortNames:
+      - ftc
+    singular: federatedtypeconfig
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: "FederatedTypeConfig programs KubeFed to know about a single API
+        type - the \"target type\" - that a user wants to federate. For each target
+        type, there is a corresponding FederatedType that has the following fields:
+        \n - The \"template\" field specifies the basic definition of a federated
+        resource - The \"placement\" field specifies the placement information for
+        the federated   resource - The \"overrides\" field specifies how the target
+        resource should vary across   clusters."
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: FederatedTypeConfigSpec defines the desired state of FederatedTypeConfig.
+          properties:
+            federatedType:
+              description: Configuration for the federated type that defines (via
+                template, placement and overrides fields) how the target type should
+                appear in multiple cluster.
+              properties:
+                group:
+                  description: Group of the resource.
+                  type: string
+                kind:
+                  description: Camel-cased singular name of the resource (e.g. ConfigMap)
+                  type: string
+                pluralName:
+                  description: Lower-cased plural name of the resource (e.g. configmaps).  If
+                    not provided, it will be computed by lower-casing the kind and
+                    suffixing an 's'.
+                  type: string
+                scope:
+                  description: Scope of the resource.
+                  type: string
+                version:
+                  description: Version of the resource.
+                  type: string
+              required:
+                - kind
+                - pluralName
+                - scope
+                - version
+              type: object
+            propagation:
+              description: Whether or not propagation to member clusters should be
+                enabled.
+              type: string
+            statusCollection:
+              description: Whether or not Status object should be populated.
+              type: string
+            statusType:
+              description: Configuration for the status type that holds information
+                about which type holds the status of the federated resource. If not
+                provided, the group and version will default to those provided for
+                the federated type api resource.
+              properties:
+                group:
+                  description: Group of the resource.
+                  type: string
+                kind:
+                  description: Camel-cased singular name of the resource (e.g. ConfigMap)
+                  type: string
+                pluralName:
+                  description: Lower-cased plural name of the resource (e.g. configmaps).  If
+                    not provided, it will be computed by lower-casing the kind and
+                    suffixing an 's'.
+                  type: string
+                scope:
+                  description: Scope of the resource.
+                  type: string
+                version:
+                  description: Version of the resource.
+                  type: string
+              required:
+                - kind
+                - pluralName
+                - scope
+                - version
+              type: object
+            targetType:
+              description: The configuration of the target type. If not set, the pluralName
+                and groupName fields will be set from the metadata.name of this resource.
+                The kind field must be set.
+              properties:
+                group:
+                  description: Group of the resource.
+                  type: string
+                kind:
+                  description: Camel-cased singular name of the resource (e.g. ConfigMap)
+                  type: string
+                pluralName:
+                  description: Lower-cased plural name of the resource (e.g. configmaps).  If
+                    not provided, it will be computed by lower-casing the kind and
+                    suffixing an 's'.
+                  type: string
+                scope:
+                  description: Scope of the resource.
+                  type: string
+                version:
+                  description: Version of the resource.
+                  type: string
+              required:
+                - kind
+                - pluralName
+                - scope
+                - version
+              type: object
+          required:
+            - federatedType
+            - propagation
+            - targetType
+          type: object
+        status:
+          description: FederatedTypeConfigStatus defines the observed state of FederatedTypeConfig
+          properties:
+            observedGeneration:
+              description: ObservedGeneration is the generation as observed by the
+                controller consuming the FederatedTypeConfig.
+              format: int64
+              type: integer
+            propagationController:
+              description: PropagationController tracks the status of the sync controller.
+              type: string
+            statusController:
+              description: StatusController tracks the status of the status controller.
+              type: string
+          required:
+            - observedGeneration
+            - propagationController
+          type: object
+      required:
+        - spec
+      type: object
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+{{ end }}
