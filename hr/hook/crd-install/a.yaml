@@ -1,0 +1,12 @@
+apiVersion: app.alauda.io/v1alpha1
+kind: HelmRequest
+metadata:
+  name: kubefed-access
+spec:
+  chart: captain-test/kubefed
+  values:
+    global:
+      registry:
+        address: 192.168.16.52:60080
+    retry: 5
+  version: 0.0.3
