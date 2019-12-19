@@ -2,6 +2,5 @@ apiVersion: app.alauda.io/v1alpha1
 kind: ChartRepo
 metadata:
   name: captain-test
-  namespace: captain
 spec:
   url: https://alauda.github.io/captain-test-charts/
