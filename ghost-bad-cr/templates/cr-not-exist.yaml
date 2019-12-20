@@ -1,5 +1,6 @@
 apiVersion: "stable.example.com/v1"
 kind: CronTab
 metadata:
+  name: test-cr
   finalizers:
   - finalizer.stable.example.com
