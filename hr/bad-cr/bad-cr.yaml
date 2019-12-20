@@ -1,6 +1,6 @@
 kind: HelmRequest
 apiVersion: app.alauda.io/v1alpha1
 metadata:
-  name: bad-cr
+  name: ghost-bad-cr
 spec:
   chart: captain-test/ghost-bad-cr
