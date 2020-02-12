@@ -1,0 +1,108 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    alauda.io/creator: kubernetes-admin
+    alauda.io/updated-at: "2020-01-14T06:22:09Z"
+    deployment.kubernetes.io/revision: "10"
+  creationTimestamp: "2019-12-06T02:58:07Z"
+  generation: 11
+  labels:
+    chart: alauda-cluster-base-v2.8-b.8-2.0
+    service_name: metis
+  name: metis
+  namespace: cpaas-system
+  resourceVersion: "49103446"
+  selfLink: /apis/extensions/v1beta1/namespaces/cpaas-system/deployments/metis
+  uid: 3ae13a88-17d4-11ea-a1b4-5254000ec09b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      service_name: metis
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service_name: metis
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: service_name
+                operator: In
+                values:
+                - metis
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - --metrics-addr=0.0.0.0:8080
+        - --enable-leader-election
+        - --base-domain=alauda.io
+        command:
+        - /manager
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: index.alauda.cn/alaudak8s/metis:d3c745e
+        imagePullPolicy: Always
+        name: metis
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: certs
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - sh
+        - /generate_certificate.sh
+        - --service
+        - metis-webhook
+        - --webhook
+        - no-use
+        - --secret
+        - metis-webhook-cert
+        - --namespace
+        - $(KUBERNETES_NAMESPACE)
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: index.alauda.cn/alaudak8s/cert-init
+        imagePullPolicy: IfNotPresent
+        name: cert-init
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: certs
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: metis-serving-cert
