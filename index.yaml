@@ -3,7 +3,7 @@ entries:
   ghost-bad-cr:
   - apiVersion: v1
     appVersion: 3.1.1
-    created: "2020-02-17T14:07:00.939162+08:00"
+    created: "2020-02-17T14:32:14.154791+08:00"
     dependencies:
     - condition: mariadb.enabled
       name: mariadb
@@ -36,7 +36,7 @@ entries:
   jaeger-operator:
   - apiVersion: v1
     appVersion: 1.14.0
-    created: "2020-02-17T14:07:00.941878+08:00"
+    created: "2020-02-17T14:32:14.157095+08:00"
     description: jaeger-operator Helm chart for Kubernetes
     digest: 53577db1e5b3857ddb6036f309474e4b77368297d2c858d9aa4382d43f89413b
     home: https://www.jaegertracing.io/
@@ -53,7 +53,7 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: lts
-    created: "2020-02-17T14:07:00.950011+08:00"
+    created: "2020-02-17T14:32:14.164903+08:00"
     description: Open source continuous integration server. It supports multiple SCM
       tools including CVS, Subversion and Git. It can execute Apache Ant and Apache
       Maven-based projects as well as arbitrary scripts.
@@ -82,7 +82,7 @@ entries:
     version: 1.9.8
   kubefed:
   - apiVersion: v1
-    created: "2020-02-17T14:07:00.967375+08:00"
+    created: "2020-02-17T14:32:14.176725+08:00"
     dependencies:
     - condition: controllermanager.enabled
       name: controllermanager
@@ -95,7 +95,7 @@ entries:
     - https://alauda.github.io/captain-test-charts/kubefed-0.0.4.tgz
     version: 0.0.4
   - apiVersion: v1
-    created: "2020-02-17T14:07:00.96233+08:00"
+    created: "2020-02-17T14:32:14.173758+08:00"
     dependencies:
     - condition: controllermanager.enabled
       name: controllermanager
@@ -108,7 +108,7 @@ entries:
     - https://alauda.github.io/captain-test-charts/kubefed-0.0.3.tgz
     version: 0.0.3
   - apiVersion: v1
-    created: "2020-02-17T14:07:00.95691+08:00"
+    created: "2020-02-17T14:32:14.169253+08:00"
     dependencies:
     - condition: controllermanager.enabled
       name: controllermanager
@@ -123,7 +123,7 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 0.26.1
-    created: "2020-02-17T14:07:00.973461+08:00"
+    created: "2020-02-17T14:32:14.181481+08:00"
     description: An nginx Ingress controller that uses ConfigMap to store the nginx
       configuration.
     digest: 6d14f77dd54befcf21d7234b28363141165b4196d4cee5464e3741b813f6813a
@@ -146,7 +146,7 @@ entries:
   patch:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-02-17T14:07:00.977998+08:00"
+    created: "2020-02-17T14:32:14.183673+08:00"
     description: A Helm chart for Kubernetes
     digest: f3ecc67425e6eaf5be4d197262ab273bcdf0178baca9a4e9389853668ad393b5
     name: patch
@@ -156,7 +156,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-02-17T14:07:00.975719+08:00"
+    created: "2020-02-17T14:32:14.182951+08:00"
     description: A Helm chart for Kubernetes
     digest: 5434a7953a55f8cb0450c368aae41bd114ad33a4bb1f25ab4e1b2734b6a8fb8e
     name: patch
@@ -167,7 +167,7 @@ entries:
   test-update:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-02-17T14:07:00.979799+08:00"
+    created: "2020-02-17T14:32:14.185559+08:00"
     description: A Helm chart for Kubernetes
     digest: dd918360091fc607670932fff1b831ea74df8f00a9d9767da63a61f38980ba26
     name: test-update
@@ -178,7 +178,7 @@ entries:
   test-update-2:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-02-17T14:07:00.981846+08:00"
+    created: "2020-02-17T14:32:14.187296+08:00"
     description: A Helm chart for Kubernetes
     digest: edbd1316c074631e084b15dae1032941b93387b13185171228fe154025b6714a
     name: test-update-2
@@ -216,7 +216,7 @@ entries:
   tomcat-crd-install:
   - apiVersion: v1
     appVersion: "7.0"
-    created: "2020-02-17T14:07:00.985267+08:00"
+    created: "2020-02-17T14:32:14.189412+08:00"
     description: Deploy a basic tomcat application server with sidecar as web archive
       container
     digest: 7fa205225eb0fd9bd9ce74e72d5578a21d90d4fe3f1428931f62112c93cee5da
@@ -229,4 +229,4 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/tomcat-crd-install-0.4.0.tgz
     version: 0.4.0
-generated: "2020-02-17T14:07:00.926309+08:00"
+generated: "2020-02-17T14:32:14.144712+08:00"
