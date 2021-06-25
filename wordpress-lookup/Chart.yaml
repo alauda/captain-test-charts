@@ -30,7 +30,7 @@ keywords:
 maintainers:
 - email: containers@bitnami.com
   name: Bitnami
-name: wordpress
+name: wordpress-lookup
 sources:
 - https://github.com/bitnami/bitnami-docker-wordpress
 - https://wordpress.org/
