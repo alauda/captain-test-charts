@@ -202,48 +202,6 @@ entries:
     urls:
     - https://alauda.github.io/captain-test-charts/tomcat-crd-install-0.4.0.tgz
     version: 0.4.0
-  wordpress:
-  - annotations:
-      category: CMS
-    apiVersion: v2
-    appVersion: 5.7.2
-    created: "2021-06-25T18:57:42.645647+08:00"
-    dependencies:
-    - condition: mariadb.enabled
-      name: mariadb
-      repository: https://charts.bitnami.com/bitnami
-      version: 9.x.x
-    - condition: memcached.enabled
-      name: memcached
-      repository: https://charts.bitnami.com/bitnami
-      version: 5.x.x
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      tags:
-      - bitnami-common
-      version: 1.x.x
-    description: Web publishing platform for building blogs and websites.
-    digest: 7ec641d461746e7052733fafeb321abd09ba03e72507830bd5e8333432820e87
-    home: https://github.com/bitnami/charts/tree/master/bitnami/wordpress
-    icon: https://bitnami.com/assets/stacks/wordpress/img/wordpress-stack-220x234.png
-    keywords:
-    - application
-    - blog
-    - cms
-    - http
-    - php
-    - web
-    - wordpress
-    maintainers:
-    - email: containers@bitnami.com
-      name: Bitnami
-    name: wordpress
-    sources:
-    - https://github.com/bitnami/bitnami-docker-wordpress
-    - https://wordpress.org/
-    urls:
-    - https://alauda.github.io/captain-test-charts/wordpress-11.0.13.tgz
-    version: 11.0.13
   wordpress-lookup:
   - annotations:
       category: CMS
